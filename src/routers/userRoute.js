@@ -1,5 +1,6 @@
 const express = require('express')
 const User = require('../models/user')
+const Product = require('../models/product')
 const router = express.Router()
 const auth = require('../middleware/auth')
 const miniauth = require('../middleware/miniauth')
@@ -8,13 +9,17 @@ const {isEmail, isNumeric} = require('validator')
 
 router.get('', miniauth, async (req ,res) => {
     if(req.user !== null){
+        const products = await Product.find({})
         res.render('index', {
             author: 'Andrey Raychev',
-            username: req.user.username
+            username: req.user.username,
+            products
         })
     }else{
+        const products = await Product.find({})
         res.render('index', {
-            author: 'Andrey Raychev'
+            author: 'Andrey Raychev',
+            products
         })
     }
 })
@@ -23,10 +28,7 @@ router.post('/registration', async (req ,res) => {
     const token = await user.generateAuthToken()
     await user.save()
     res.cookie('auth_token', token)
-    res.render('index',{
-        username: user.username,
-        author: "Andrew Raychev",
-    })
+    res.redirect('/')
 })
 
 router.get('/register', (req ,res) => {

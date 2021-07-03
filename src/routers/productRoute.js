@@ -56,6 +56,17 @@ router.get('/product/edit/:id', auth, async (req, res) => {
     })
 })
 
+router.get('/cart/add/:id', miniauth, async (req, res) =>{
+    try{
+        const product = await Product.findById(req.params.id)
+        await product.updateOne({buyer: req.user._id})
+        await product.save()
+        res.redirect('/')
+    } catch (e) {
+        res.status(400).send(e.message)
+    }
+})
+
 router.post('/product/update/:id', auth, async (req, res) => {
     try{
         const product = await Product.findById(req.params.id)

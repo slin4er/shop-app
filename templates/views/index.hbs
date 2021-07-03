@@ -2,7 +2,17 @@
 <body>
     {{>header}}
     <h1>Магазин</h1>
-    <h2>Тут будут товары</h2>
+    <h2>Товары</h2>
+    {{#if products}}
+    {{#each products}}
+    <ul>
+        <li>Название: {{this.name}}</li>
+        <li>Цена: {{this.price}}</li>
+        <li><a href="#">Подробнее</a></li>
+        <li><a href="/cart/add/{{this.id}}">В корзину</a></li>
+    </ul>
+    {{/each}}
+    {{/if}}
     {{>footer}}
 </body>
 </html>

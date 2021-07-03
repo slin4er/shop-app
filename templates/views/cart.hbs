@@ -2,6 +2,19 @@
 <body>
     {{>header}}
     <h3>Ваши покупки</h3>
+    {{#if products}}
+    {{#each products}}
+    <ul>
+        <li>Название: {{this.name}}</li>
+        <li>Описание: {{this.description}}</li>
+        <li>Цена: {{this.price}}</li>
+        <li><a href="#">Купить</a></li>
+        <li><a href="/cart/delete/{{this._id}}">Убрать</a></li>
+    </ul>
+    {{/each}}
+    {{else}}
+    <h3>Ваша корзина пуста</h3>
+    {{/if}}
     {{>footer}}
 </body>
 </html>
