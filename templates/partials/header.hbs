@@ -1,0 +1,18 @@
+<header>
+    <div class="header-left">
+        <a href="/">Главная</a>
+        <a href="/my/products">Продажи</a>
+        <a href="/cart">Корзина</a>
+    </div>
+    <div class="header-right">
+        {{#if username}}
+        <a href="/profile">{{username}}</a>
+        <form method="POST" action="/user/logout">
+            <button>Выйти</button>
+        </form>
+        {{else}}
+        <a href="/login">Войти</a>
+        <a href="/register">Регистрация</a>
+        {{/if}}
+    </div>
+</header>

@@ -1,0 +1,46 @@
+header {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.header-right {
+    display: flex;
+    width: 10%;
+    justify-content: space-between;
+}
+
+.header-left {
+    display: flex;
+    width: 20%;
+    justify-content: space-between;
+}
+
+.post {
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    width: 195px;
+}
+
+input {
+    margin-bottom: 10px;
+}
+
+h3.productsforsell{
+    margin-left: 20px;
+}
+
+h1.noproducts{
+    margin-left: 20px;
+}
+/* .footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+
+.footer-div {
+    position: relative;
+    height: 100%;
+} */

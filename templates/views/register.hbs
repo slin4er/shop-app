@@ -1,0 +1,19 @@
+{{>head}}
+<body>
+    {{>header}}
+    <div class="post">
+        <form method="POST" action="/registration">
+            <label for="username">Имя</label>
+            <input type="text", name="username", id="username">
+            <label for="password">Пароль</label>
+            <input type="text", name="password", id="password">
+            <label for="email">Почта</label>
+            <input type="text", name="email", id="email">
+            <label for="phone">Телефон</label>
+            <input type="text", name="phone", id="phone">
+            <button>Зарегистрироваться</button>
+        </form>
+    </div>
+    {{>footer}}
+</body>
+</html>

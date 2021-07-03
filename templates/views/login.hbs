@@ -1,0 +1,15 @@
+{{>head}}
+<body>
+    {{>header}}
+    <div class="post">
+        <form method="POST" action="/login/user">
+            <label for="email">Почта</label>
+            <input type="text" name="email" id="email">
+            <label for="password">Пароль</label>
+            <input type="text" name="password", id="password">
+            <button>Войти</button>
+        </form>
+    </div>
+    {{>footer}}
+</body>
+</html>

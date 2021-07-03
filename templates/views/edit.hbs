@@ -1,0 +1,17 @@
+{{>head}}
+<body>
+    {{>header}}
+    <div class="post">
+        <form method="POST" action="/user/edit">
+            <label for="username">Имя</label>
+            <input type="text", name="username", id="username" value={{username}}>
+            <label for="email">Почта</label>
+            <input type="text", name="email", id="email" value={{email}}>
+            <label for="phone">Телефон</label>
+            <input type="text", name="phone", id="phone" value={{phone}}>
+            <button>Редактировать</button>
+        </form>
+    </div>
+    {{>footer}}
+</body>
+</html>

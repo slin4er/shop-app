@@ -1,0 +1,40 @@
+{{>head}}
+<body>
+    {{>header}}
+    <ul>
+        <li><a href="/product/sell">Добавить предмет на продажу</a></li>
+    </ul>
+    {{#if form}}
+    <div class="post">
+        <form method="POST" action="/product/create">
+            <label for="name">Название</label>
+            <input type="text", name="name", id="name">
+            <label for="password">Описание</label>
+            <input type="text", name="description", id="description">
+            <label for="email">Цена</label>
+            <input type="string", name="price", id="price">
+            <button>Выставить</button>
+        </form>
+    </div>
+    {{else}}
+    <h3 calss="productsforsell">Ваши предметы на продажу:</h3>
+    {{/if}}
+    {{#if products}}
+    {{#each products}}
+        <ul>
+            <li>{{this.name}}</li>
+            <li>{{this.price}}</li>
+            <li><a href="/product/edit/{{this._id}}">Редактировать</a></li>
+            <li><a href="/product/delete/{{this._id}}">Удалить</a></li>
+            <li>-------------</li>
+        </ul>
+    {{/each}}
+    {{else}}
+    {{#if form}}
+    {{else}}
+    <h1 calss="noproducts">Вы ничего не продаёте</h1>
+    {{/if}}
+    {{/if}}
+    {{>footer}}
+</body>
+</html>
