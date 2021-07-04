@@ -8,8 +8,8 @@
     <ul>
         <li>Название: {{this.name}}</li>
         <li>Цена: {{this.price}}</li>
-        <li><a href="#">Подробнее</a></li>
-        <li><a href="/cart/add/{{this.id}}">В корзину</a></li>
+        <li><a href="/product/view/{{this._id}}">Подробнее</a></li>
+        <li><a href="/cart/add/{{this._id}}">В корзину</a></li>
     </ul>
     {{/each}}
     {{/if}}

@@ -51,12 +51,6 @@ userSchema.virtual('products',{
     foreignField: 'owner'
 })
 
-userSchema.virtual('cart', {
-    ref: 'Product',
-    localField: '_id',
-    foreignField: 'buyer'
-})
-
 userSchema.statics.findByCredentials = async (email,password) => {
     const user = await User.findOne({email})
     if(!user){

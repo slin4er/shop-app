@@ -21,10 +21,7 @@ const productSchema = new mongoose.Schema({
         required: true,
         ref: 'User'
     },
-    buyer: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
-    }
+    buyers: [String],
 })
 
 const Product = mongoose.model('Product', productSchema)

@@ -35,17 +35,45 @@ router.get('/my/products', miniauth, async (req, res) => {
 })
 
 router.get('/product/sell', auth, async (req, res) => {
-    const form = true
-    res.render('sells',{
+    try{
+        const form = true
+        res.render('sells',{
         username: req.user.username,
         form,
         author: "Andrey Raychev"
-    })
+        })
+    } catch (e) {
+        res.status(400).send(e.message)
+    }
+})
+
+router.get('/product/view/:id', miniauth, async (req, res) => {
+    try{
+        if(req.user !== null){
+            const product = await Product.findById(req.params.id)
+            if(product){
+                return res.render('productview', {
+                  username: req.user.username,
+                  product,
+                  author: 'Andrey Raychev'
+                })
+            }
+        } else {
+            const product = await Product.findById(req.params.id)
+            if (product) {
+                res.render('productview', {
+                    author: 'Andrey Raychev',
+                    product
+                })
+            }
+        }
+    } catch (e) {
+        res.status(400).send(e.message)
+    }
 })
 
 router.get('/product/edit/:id', auth, async (req, res) => {
     const product = await Product.findById(req.params.id)
-    console.log(product.description)
     res.render('edit_product', {
         username: req.user.username,
         name: product.name,
@@ -54,17 +82,6 @@ router.get('/product/edit/:id', auth, async (req, res) => {
         _id: product._id,
         author: 'Andrey Raychev'
     })
-})
-
-router.get('/cart/add/:id', miniauth, async (req, res) =>{
-    try{
-        const product = await Product.findById(req.params.id)
-        await product.updateOne({buyer: req.user._id})
-        await product.save()
-        res.redirect('/')
-    } catch (e) {
-        res.status(400).send(e.message)
-    }
 })
 
 router.post('/product/update/:id', auth, async (req, res) => {

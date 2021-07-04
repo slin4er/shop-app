@@ -1,0 +1,16 @@
+{{>head}}
+<body>
+    {{>header}}
+    <h1>Магазин</h1>
+    {{#if product}}
+    <h2>{{product.name}}</h2>
+    <ul>
+        <li>Название: {{product.name}}</li>
+        <li>Описание: {{product.description}}</li>
+        <li>Цена: {{product.price}}</li>
+        <li><a href="/cart/add/{{product.id}}">В корзину</a></li>
+    </ul>
+    {{/if}}
+    {{>footer}}
+</body>
+</html>

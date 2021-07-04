@@ -85,7 +85,7 @@ router.post('/user/logout',auth , async (req, res) => {
     try{
         req.user.tokens = await req.user.tokens.filter((token) => token.token !== req.token)
         await req.user.save()
-        res.redirect('/')
+        res.redirect('/login')
     } catch (e) {
         res.status(400).send(e.message)
     }
