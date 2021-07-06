@@ -4,6 +4,7 @@ const isEmpty = (token) => {
     return !Object.keys(token).length > 0
 }
 
+//Mini authentication,even if user is not authenticated, he can still view the page
 const miniauth = async (req, res, next) => {
     try{
         const token = req.cookies['auth_token']
@@ -24,4 +25,5 @@ const miniauth = async (req, res, next) => {
     }
 }
 
+//Exports modules
 module.exports = miniauth

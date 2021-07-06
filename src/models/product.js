@@ -1,5 +1,7 @@
+//Imports
 const mongoose = require('mongoose')
 
+//Product Schema
 const productSchema = new mongoose.Schema({
     name: {
         type: String,
@@ -33,6 +35,8 @@ const productSchema = new mongoose.Schema({
     }],
 })
 
+//Creating a model
 const Product = mongoose.model('Product', productSchema)
 
+//Export modules
 module.exports = Product

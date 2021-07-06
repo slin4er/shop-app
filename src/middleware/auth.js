@@ -1,6 +1,8 @@
+//Imports
 const jwt = require('jsonwebtoken')
 const User = require('../models/user')
 
+//Authorization function
 const auth = async (req, res, next) => {
     try{
         const token = req.cookies['auth_token']
@@ -18,4 +20,5 @@ const auth = async (req, res, next) => {
     }
 }
 
+//Export modules
 module.exports = auth

@@ -1,8 +1,10 @@
+//Imports
 const mongoose = require('mongoose')
 const {isEmail, isNumeric} = require('validator')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs')
 
+//User Schema
 const userSchema = new mongoose.Schema({
     username:{
         type: String,
@@ -45,12 +47,14 @@ const userSchema = new mongoose.Schema({
     }]
 })
 
+//Virtual Schema for products
 userSchema.virtual('products',{
     ref: 'Product',
     localField: '_id',
     foreignField: 'owner'
 })
 
+//Function to login the user
 userSchema.statics.findByCredentials = async (email,password) => {
     const user = await User.findOne({email})
     if(!user){
@@ -63,6 +67,7 @@ userSchema.statics.findByCredentials = async (email,password) => {
     return user
 }
 
+//Generating the token
 userSchema.methods.generateAuthToken = async function() {
     const user = this
     const token = jwt.sign({_id: user._id}, 'budemjitdruzhno')
@@ -71,6 +76,7 @@ userSchema.methods.generateAuthToken = async function() {
     return token
 }
 
+//Before save the user
 userSchema.pre('save', async function(next){
     const user = this
     if(user.isModified('password')){
@@ -78,6 +84,9 @@ userSchema.pre('save', async function(next){
     }
     next()
 })
+
+//Creating a model
 const User = mongoose.model('User', userSchema)
 
+//Export modules
 module.exports = User

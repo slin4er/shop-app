@@ -1,9 +1,11 @@
+//Imports
 const Product = require('../models/product')
 const auth = require('../middleware/auth')
 const miniauth = require('../middleware/miniauth')
 const express = require('express')
 const router = express.Router()
 
+//Creating a product
 router.post('/product/create', auth, async (req, res) => {
     try{
         const product = await new Product({...req.body, owner: req.user._id})
@@ -14,8 +16,9 @@ router.post('/product/create', auth, async (req, res) => {
     }
 })
 
+//Products created by user
 router.get('/my/products', miniauth, async (req, res) => {
-    if(req.user !== null && req.user !== undefined){
+    if(req.user !== null && req.user !== undefined && req.user !== false){
         await req.user.populate({
             path: 'products'
         }).execPopulate()
@@ -34,19 +37,7 @@ router.get('/my/products', miniauth, async (req, res) => {
     }
 })
 
-router.get('/product/sell', auth, async (req, res) => {
-    try{
-        const form = true
-        res.render('sells',{
-        username: req.user.username,
-        form,
-        author: "Andrey Raychev"
-        })
-    } catch (e) {
-        res.status(400).send(e.message)
-    }
-})
-
+//Product view
 router.get('/product/view/:id', miniauth, async (req, res) => {
     try{
         if(req.user !== null){
@@ -72,6 +63,7 @@ router.get('/product/view/:id', miniauth, async (req, res) => {
     }
 })
 
+//Editing one product
 router.get('/product/edit/:id', auth, async (req, res) => {
     const product = await Product.findById(req.params.id)
     res.render('edit_product', {
@@ -84,6 +76,7 @@ router.get('/product/edit/:id', auth, async (req, res) => {
     })
 })
 
+//Updating onde product
 router.post('/product/update/:id', auth, async (req, res) => {
     try{
         const product = await Product.findById(req.params.id)
@@ -95,10 +88,12 @@ router.post('/product/update/:id', auth, async (req, res) => {
     }
 })
 
+//Deleting the product
 router.get('/product/delete/:id', auth, async (req, res) => {
     const product = await Product.findById(req.params.id)
     await product.remove()
     res.redirect(req.get('referer'))
 })
 
+//Export modules
 module.exports = router

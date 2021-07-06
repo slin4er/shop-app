@@ -1,3 +1,4 @@
+//Imports
 const express = require('express')
 const User = require('../models/user')
 const Product = require('../models/product')
@@ -7,6 +8,7 @@ const miniauth = require('../middleware/miniauth')
 const jwt = require('jsonwebtoken')
 const {isEmail, isNumeric} = require('validator')
 
+//Main page
 router.get('', miniauth, async (req ,res) => {
     if(req.user !== null){
         const products = await Product.find({})
@@ -23,6 +25,8 @@ router.get('', miniauth, async (req ,res) => {
         })
     }
 })
+
+//Registration
 router.post('/registration', async (req ,res) => {
     const user = await new User(req.body)
     const token = await user.generateAuthToken()
@@ -31,18 +35,21 @@ router.post('/registration', async (req ,res) => {
     res.redirect('/')
 })
 
+//Registration page
 router.get('/register', (req ,res) => {
     res.render('register', {
         author: "Andrew Raychev"
     })
 })
 
+//Login page
 router.get('/login', (req, res) => {
     res.render('login',{
         author: "Andrey Raychev"
     })
 })
 
+//Logining in the user
 router.post('/login/user', async (req, res) => {
     try{
         const user = await User.findByCredentials(req.body.email, req.body.password)
@@ -58,6 +65,7 @@ router.post('/login/user', async (req, res) => {
 
 })
 
+//View prfile
 router.get('/profile', auth, (req, res) => {
     res.render('edit',{
         username: req.user.username,
@@ -67,6 +75,7 @@ router.get('/profile', auth, (req, res) => {
     })
 })
 
+//Edit profile
 router.post('/user/edit', auth, async (req, res) => {
     try{
         if(isEmail(req.body.email) && isNumeric(req.body.phone)){
@@ -81,6 +90,7 @@ router.post('/user/edit', auth, async (req, res) => {
     }
 })
 
+//User logout
 router.post('/user/logout',auth , async (req, res) => {
     try{
         req.user.tokens = await req.user.tokens.filter((token) => token.token !== req.token)
@@ -91,4 +101,5 @@ router.post('/user/logout',auth , async (req, res) => {
     }
 })
 
+//Export modules
 module.exports = router
