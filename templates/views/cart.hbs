@@ -12,6 +12,11 @@
         <li><a href="/cart/delete/{{this._id}}">Убрать</a></li>
     </ul>
     {{/each}}
+    {{#each quantity}}
+        <ul>
+            <li>Колчество: {{this}}</li>
+        </ul>
+    {{/each}}
     {{else}}
     <h3>Ваша корзина пуста</h3>
     {{/if}}

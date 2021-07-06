@@ -6,13 +6,20 @@ const router = express.Router()
 
 router.get('/cart',miniauth, async (req, res) => {
     if(req.user !== null){
-        const productos = await Product.find({})
-        const products = await productos.filter((product) => product.buyers.includes(req.user.username))
+        const products = await Product.find({'buyers.buyer': req.user.username})
+        const quantity = []
+        await products.forEach(element => {
+            neededBuyer = element.buyers.filter((buyer) => buyer.buyer === req.user.username)
+            quantity.push(neededBuyer[0].quantity)
+        });
+
+        const i = 0
         if(products){
             res.render('cart', {
                 author: 'Andrey Raychev',
                 username: req.user.username,
-                products
+                products,
+                quantity
             })
         } else {
             res.render('cart', {
@@ -30,11 +37,13 @@ router.get('/cart',miniauth, async (req, res) => {
 router.get('/cart/add/:id', auth, async (req, res) =>{
     try{
         const product = await Product.findById(req.params.id)
-        if (product.buyers.includes(req.user.username))
-        {
+        existUser = await product.buyers.filter((buyer) => buyer.buyer === req.user.username)
+        if(existUser.length > 0) {
+            existUser[0].quantity += 1
+            await product.save()
             return res.redirect(req.get('referer'))
         }
-        await product.updateOne({$push: {buyers: req.user.username}})
+        product.buyers = await product.buyers.concat({buyer: req.user.username, quantity: 1})
         await product.save()
         res.redirect(req.get('referer'))
     } catch (e) {
@@ -45,7 +54,7 @@ router.get('/cart/add/:id', auth, async (req, res) =>{
 router.get('/cart/delete/:id', auth, async(req, res) => {
     try{
         const product = await Product.findById(req.params.id)
-        product.buyers = await product.buyers.filter((buyer) => buyer !== req.user.username)
+        product.buyers = await product.buyers.filter((buyer) => buyer.buyer !== req.user.username)
         await product.save()
         res.redirect('/cart')
     } catch (e) {

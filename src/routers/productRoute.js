@@ -15,7 +15,7 @@ router.post('/product/create', auth, async (req, res) => {
 })
 
 router.get('/my/products', miniauth, async (req, res) => {
-    if(req.user !== null){
+    if(req.user !== null && req.user !== undefined){
         await req.user.populate({
             path: 'products'
         }).execPopulate()

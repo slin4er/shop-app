@@ -21,7 +21,16 @@ const productSchema = new mongoose.Schema({
         required: true,
         ref: 'User'
     },
-    buyers: [String],
+    buyers: [{
+        buyer:{
+            type: String,
+            trim: true,
+        },
+        quantity:{
+            type: Number,
+            trim: true
+        }
+    }],
 })
 
 const Product = mongoose.model('Product', productSchema)
