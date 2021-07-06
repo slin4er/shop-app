@@ -14,7 +14,7 @@ const productSchema = new mongoose.Schema({
         maxlength: 100
     },
     price: {
-        type: String,
+        type: Number,
         required: true,
         trim: true
     },
@@ -31,6 +31,11 @@ const productSchema = new mongoose.Schema({
         quantity:{
             type: Number,
             trim: true
+        },
+        price: {
+            type: Number,
+            trim: true,
+            default: this.price
         }
     }],
 })

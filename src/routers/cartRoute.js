@@ -40,10 +40,12 @@ router.get('/cart/add/:id', auth, async (req, res) =>{
         existUser = await product.buyers.filter((buyer) => buyer.buyer === req.user.username)
         if(existUser.length > 0) {
             existUser[0].quantity += 1
+            const price = product.price
+            existUser[0].price = price * existUser[0].quantity
             await product.save()
             return res.redirect(req.get('referer'))
         }
-        product.buyers = await product.buyers.concat({buyer: req.user.username, quantity: 1})
+        product.buyers = await product.buyers.concat({buyer: req.user.username, quantity: 1, price: product.price})
         await product.save()
         res.redirect(req.get('referer'))
     } catch (e) {
@@ -59,6 +61,8 @@ router.get('/cart/delete/:id', auth, async(req, res) => {
         if(neededBuyer.length > 0){
             if(neededBuyer[0].quantity > 1){
                 neededBuyer[0].quantity -= 1
+                const price = product.price
+                neededBuyer[0].price = price * neededBuyer[0].quantity
                 await product.save()
                 return res.redirect(req.get('referer'))
             } else if (neededBuyer[0].quantity === 1) {

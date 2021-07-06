@@ -9,10 +9,10 @@
         <form method="POST" action="/product/create">
             <label for="name">Название</label>
             <input type="text", name="name", id="name">
-            <label for="password">Описание</label>
+            <label for="description">Описание</label>
             <input type="text", name="description", id="description">
-            <label for="email">Цена</label>
-            <input type="string", name="price", id="price">
+            <label for="price">Цена</label>
+            <input type="number", name="price", id="price">
             <button>Выставить</button>
         </form>
     </div>
@@ -22,8 +22,9 @@
     {{#if products}}
     {{#each products}}
         <ul>
-            <li>{{this.name}}</li>
-            <li>{{this.price}}</li>
+            <li>Название: {{this.name}}</li>
+            <li>Цена: {{this.price}}</li>
+            <li>Описание: {{this.description}}</li>
             <li><a href="/product/edit/{{this._id}}">Редактировать</a></li>
             <li><a href="/product/delete/{{this._id}}">Удалить</a></li>
             <li>-------------</li>

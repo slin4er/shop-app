@@ -7,9 +7,10 @@
     <ul>
         <li>Название: {{this.name}}</li>
         <li>Описание: {{this.description}}</li>
-        <li>Цена: {{this.price}}</li>
         <li>Количество: {{this.buyers.0.quantity}}</li>
+        <li>Цена: {{this.buyers.0.price}}</li>
         <li><a href="#">Купить</a></li>
+        <li><a href="/cart/add/{{this._id}}">Добавить</a></li>
         <li><a href="/cart/delete/{{this._id}}">Убрать</a></li>
     </ul>
     {{/each}}
