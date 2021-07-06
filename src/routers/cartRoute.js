@@ -7,19 +7,15 @@ const router = express.Router()
 router.get('/cart',miniauth, async (req, res) => {
     if(req.user !== null){
         const products = await Product.find({'buyers.buyer': req.user.username})
-        const quantity = []
         await products.forEach(element => {
             neededBuyer = element.buyers.filter((buyer) => buyer.buyer === req.user.username)
-            quantity.push(neededBuyer[0].quantity)
+            element.buyers = neededBuyer[0]
         });
-
-        const i = 0
         if(products){
             res.render('cart', {
                 author: 'Andrey Raychev',
                 username: req.user.username,
                 products,
-                quantity
             })
         } else {
             res.render('cart', {
