@@ -23,6 +23,11 @@ const productSchema = new mongoose.Schema({
         required: true,
         ref: 'User'
     },
+    category: {
+        type: String,
+        trim: true,
+        required: true
+    },
     buyers: [{
         buyer:{
             type: String,

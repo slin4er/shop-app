@@ -3,6 +3,17 @@
     {{>header}}
     <h1>Магазин</h1>
     <h2>Товары</h2>
+    <form action="/products/search/category">
+        <label for="category">Выберите категорию:</label>
+        <select name="category" id="category">
+            <option value="Sport">Спорт</option>
+            <option value="Clothes">Одежда</option>
+            <option value="Accessories ">Аксессуары</option>
+            <option value="Technic">Техника</option>
+            <option value="Games">Игровое</option>
+        </select>
+        <button>Найти</button>
+    </form>
     {{#if products}}
     {{#each products}}
     <ul>

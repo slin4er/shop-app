@@ -76,6 +76,28 @@ router.get('/product/edit/:id', auth, async (req, res) => {
     })
 })
 
+router.get('/products/search/category', miniauth, async (req, res) => {
+    try{
+        if(req.user !== false){
+            const products = await Product.find({category: req.query.category})
+            res.render('index', {
+                author: 'Andrey Raychev',
+                username: req.user.username,
+                products
+            })
+        }else {
+            const products = await Product.find({category: req.body.category})
+            res.render('index', {
+                author: 'Andrey Raychev',
+                products
+            })
+        }
+    } catch (e) {
+        res.status(400).send(e.message)
+    }
+    
+})
+
 //Updating onde product
 router.post('/product/update/:id', auth, async (req, res) => {
     try{
